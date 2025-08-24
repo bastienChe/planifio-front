@@ -62,12 +62,10 @@
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
-    [events]="events"
+    [events]="(events$ | async) || []"
     [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
   >
-    </mwl-calendar-week-view>
+  </mwl-calendar-week-view>
 </div>
 
 

@@ -1,11 +1,13 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
 import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth, addHours } from 'date-fns';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {CalendarDateFormatter, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,CalendarView } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CalendarService } from '../../services/calendar.services';
+import { map } from 'rxjs/operators';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -49,19 +51,82 @@ const colors: Record<string, EventColor> = {
   templateUrl: './user-week-view.html',
 })
 export class UserWeekView {
+
+  constructor(private modal: NgbModal, private calendarService: CalendarService) { }
+  
+  ngOnInit() {
+    this.events$ = this.calendarService.events$.pipe(
+      map(events => events ?? [])
+    );
+  }
+
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Week;
 
+  events$!: Observable<CalendarEvent[]>; 
+
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+
+  refresh = new Subject<void>();
+
+  activeDayIsOpen: boolean = true;
 
   modalData?: {
     action: string;
     event: CalendarEvent;
   };
 
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+  }
+  
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  addEvent(): void {
+    this.calendarService.addEvent(
+      {
+        title: 'New event',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors['red'],
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      },
+    );
+  }
+
+  deleteEvent(eventToDelete: CalendarEvent) {
+    this.calendarService.deleteEvent(eventToDelete);
+  }
+
+  setView(view: CalendarView) {
+    this.view = view;
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
+  
+  /*
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -78,71 +143,9 @@ export class UserWeekView {
         this.handleEvent('Deleted', event);
       },
     },
-  ];
-
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [
-    {
-      start: (() => {
-        const d = new Date();
-        d.setHours(8, 30, 0, 0);
-        return d;
-      })(),
-      end: (() => {
-        const d = new Date();
-        d.setHours(9);
-        return d;
-      })(),
-      title: 'RDV Tom',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: (() => {
-        const d = new Date();
-        d.setHours(9, 30, 0, 0);
-        return d;
-      })(),
-      end: (() => {
-        const d = new Date();
-        d.setHours(10);
-        return d;
-      })(),
-      title: 'RDV Orlando',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
-
-  activeDayIsOpen: boolean = true;
-
-  constructor(private modal: NgbModal) { }
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-
+  ];*/
+  
+/*
   eventTimesChanged({
     event,
     newStart,
@@ -159,39 +162,6 @@ export class UserWeekView {
       return iEvent;
     });
     this.handleEvent('Dropped or resized', event);
-  }
+  }*/
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
 }
