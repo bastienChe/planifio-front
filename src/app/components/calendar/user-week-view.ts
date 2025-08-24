@@ -1,28 +1,8 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
+import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth, addHours } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-    CalendarDateFormatter,
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import {CalendarDateFormatter, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,CalendarView } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -43,9 +23,9 @@ const colors: Record<string, EventColor> = {
 };
 
 @Component({
-  selector: 'mwl-demo-component',
+  selector: 'user-week-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone:false,
+  standalone: false,
   providers: [CalendarDateFormatter, FlatpickrDefaults],
   styles: [
     `
@@ -66,12 +46,12 @@ const colors: Record<string, EventColor> = {
       transition('void <=> *', animate('300ms ease')),
     ]),
   ],
-  templateUrl: './template.html',
+  templateUrl: './user-week-view.html',
 })
-export class DemoComponent {
-@ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+export class UserWeekView {
+  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-  view: CalendarView = CalendarView.Week; 
+  view: CalendarView = CalendarView.Week;
 
   CalendarView = CalendarView;
 
@@ -145,7 +125,7 @@ export class DemoComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
