@@ -55,8 +55,9 @@ export class UserWeekView {
   constructor(private modal: NgbModal, private calendarService: CalendarService) { }
   
   ngOnInit() {
-    this.events$ = this.calendarService.events$.pipe(
-      map(events => events ?? [])
+    const userId = '1';
+    this.events$ = this.calendarService.users$.pipe(
+        map(users => users.get(userId)?.events || [])
     );
   }
 
@@ -99,7 +100,7 @@ export class UserWeekView {
   }
 
   addEvent(): void {
-    this.calendarService.addEvent(
+    this.calendarService.addEvent("1",
       {
         title: 'New event',
         start: startOfDay(new Date()),
@@ -115,7 +116,7 @@ export class UserWeekView {
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.calendarService.deleteEvent(eventToDelete);
+    this.calendarService.deleteEvent("1",eventToDelete);
   }
 
   setView(view: CalendarView) {
