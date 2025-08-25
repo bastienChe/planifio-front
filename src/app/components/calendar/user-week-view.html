@@ -7,6 +7,7 @@
       [ngModel]="userId"
       (ngModelChange)="onUserChange($event)"
     >
+      <option value="" disabled selected>Sélectionner un utilisateur</option>
       <option *ngFor="let u of users" [value]="u.id">{{ u.name }}</option>
     </select>
   </div>

@@ -8,6 +8,7 @@ import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CalendarService } from '../../services/calendar.services';
 import { map } from 'rxjs/operators';
+import { UserService, UserDto } from '../../services/user.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -60,36 +61,34 @@ export class UserWeekView implements OnInit {
   viewDate: Date = new Date();
   refresh = new Subject<void>();
   activeDayIsOpen: boolean = true;
+  users: UserDto[] = [];
 
   modalData?: {
     action: string;
     event: CalendarEvent;
   };  
-  
-  users = [
-    { id: '1', name: 'Utilisateur 1' },
-    { id: '2', name: 'Utilisateur 2' },
-    { id: '3', name: 'Utilisateur 3' },
-  ];
 
-  constructor(private modal: NgbModal, private calendarService: CalendarService) { }
+  constructor(private modal: NgbModal, 
+    private calendarService: CalendarService,
+    private userService: UserService) { }
   
-  ngOnInit() {
-    const userId = '1';
-    this.events$ = this.calendarService.users$.pipe(
-        map(users => users.get(userId)?.events || [])
-    );
-  }
-  
+ngOnInit() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+      if (users.length && !this.userId) {
+        this.userId = this.userId = '';
+      }
+      this.loadEvents();
+    });
+}
+
   onUserChange(userId: string) {
     this.userId = userId;
     this.loadEvents();
   }
 
   private loadEvents() {
-    this.events$ = this.calendarService.users$.pipe(
-      map(users => users.get(this.userId)?.events || [])
-    );
+    this.events$ = this.calendarService.getUserEvents$(this.userId);
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
