@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
 import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth, addHours } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -50,7 +50,27 @@ const colors: Record<string, EventColor> = {
   ],
   templateUrl: './user-week-view.html',
 })
-export class UserWeekView {
+export class UserWeekView implements OnInit {
+
+  @Input() userId: string = '1'; // par défaut utilisateur 1
+  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+  events$!: Observable<CalendarEvent[]>; 
+  view: CalendarView = CalendarView.Week;
+  CalendarView = CalendarView;
+  viewDate: Date = new Date();
+  refresh = new Subject<void>();
+  activeDayIsOpen: boolean = true;
+
+  modalData?: {
+    action: string;
+    event: CalendarEvent;
+  };  
+  
+  users = [
+    { id: '1', name: 'Utilisateur 1' },
+    { id: '2', name: 'Utilisateur 2' },
+    { id: '3', name: 'Utilisateur 3' },
+  ];
 
   constructor(private modal: NgbModal, private calendarService: CalendarService) { }
   
@@ -60,25 +80,17 @@ export class UserWeekView {
         map(users => users.get(userId)?.events || [])
     );
   }
+  
+  onUserChange(userId: string) {
+    this.userId = userId;
+    this.loadEvents();
+  }
 
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
-
-  view: CalendarView = CalendarView.Week;
-
-  events$!: Observable<CalendarEvent[]>; 
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  refresh = new Subject<void>();
-
-  activeDayIsOpen: boolean = true;
-
-  modalData?: {
-    action: string;
-    event: CalendarEvent;
-  };
+  private loadEvents() {
+    this.events$ = this.calendarService.users$.pipe(
+      map(users => users.get(this.userId)?.events || [])
+    );
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {

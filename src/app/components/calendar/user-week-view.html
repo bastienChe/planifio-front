@@ -1,3 +1,17 @@
+<div class="row mb-3">
+  <div class="col-md-4">
+    <label for="userSelect">Sélectionner un utilisateur :</label>
+    <select
+      id="userSelect"
+      class="form-select"
+      [ngModel]="userId"
+      (ngModelChange)="onUserChange($event)"
+    >
+      <option *ngFor="let u of users" [value]="u.id">{{ u.name }}</option>
+    </select>
+  </div>
+</div>
+
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">

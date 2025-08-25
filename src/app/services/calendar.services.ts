@@ -11,10 +11,9 @@ export class CalendarService {
     users$: Observable<Map<string, User>> = this._users.asObservable();
 
   constructor() {
-    // Exemple de données initiales
-    const initialUser: User = {
+    const user1: User = {
       id: '1',
-      name: 'Alice',
+      name: 'Utilisateur 1',
       events: [
         {
           start: new Date(new Date().setHours(8, 30, 0, 0)),
@@ -23,16 +22,44 @@ export class CalendarService {
           draggable: true,
           resizable: { beforeStart: true, afterEnd: true },
         },
+      ],
+    };
+
+    const user2: User = {
+      id: '2',
+      name: 'Utilisateur 2',
+      events: [
         {
-          start: new Date(new Date().setHours(9, 30, 0, 0)),
-          end: new Date(new Date().setHours(10, 0, 0, 0)),
-          title: 'RDV Orlando',
+          start: new Date(new Date().setHours(10, 0, 0, 0)),
+          end: new Date(new Date().setHours(10, 30, 0, 0)),
+          title: 'RDV Mr X',
           draggable: true,
           resizable: { beforeStart: true, afterEnd: true },
         },
       ],
     };
-    this._users.next(new Map([[initialUser.id, initialUser]]));
+
+    const user3: User = {
+      id: '3',
+      name: 'Utilisateur 3',
+      events: [
+        {
+          start: new Date(new Date().setHours(14, 0, 0, 0)),
+          end: new Date(new Date().setHours(15, 0, 0, 0)),
+          title: 'RDV client',
+          draggable: true,
+          resizable: { beforeStart: true, afterEnd: true },
+        },
+      ],
+    };
+
+    this._users.next(
+      new Map([
+        [user1.id, user1],
+        [user2.id, user2],
+        [user3.id, user3],
+      ])
+    );
   }
 
   getUserEvents(userId: string): CalendarEvent[] {
