@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { getRandomColor } from '../shared/event-color';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +9,7 @@ export class CalendarService {
 
   private events$ = new Map<string, BehaviorSubject<CalendarEvent[]>>();
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.events$.set(
       '1',
       new BehaviorSubject<CalendarEvent[]>([

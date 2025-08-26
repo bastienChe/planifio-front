@@ -1,0 +1,39 @@
+<div class="row mb-3">
+  <div class="col-md-4">
+    <label for="appointmentSelect">Sélectionner une prestation :</label>
+    <select id="appointment" [(ngModel)]="selectedAppointmentId" class="form-select">
+      <option *ngFor="let appt of appointments$ | async" [value]="appt.id">
+        {{ appt.name }} ({{ appt.durationMinutes }} min)
+      </option>
+    </select>
+  </div>
+</div>
+
+RDV disponibles : 
+
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      Lundi
+    </div>
+    <div class="col">
+      Mardi
+    </div>
+    <div class="col">
+      Mercredi
+    </div>
+    <div class="col">
+      Jeudi
+    </div>
+    <div class="col">
+      Vendredi
+    </div>
+    <div class="col">
+      Samedi
+    </div>
+    <div class="col">
+      Dimanche
+    </div>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import { UserWeekView } from './components/calendar/user-week-view';
+import { UserWeekViewComponent } from './components/calendar/user-week-view.component';
+import { TakeAppointmentComponent } from './components/appointments/take-appointment.component';
 
-// Si tu veux une vue semaine plus tard, ajoute un WeekViewAllComponent
 export const routes: Routes = [
-  { path: 'week', component: UserWeekView },
+  { path: 'week', component: UserWeekViewComponent },
+  { path: 'take-appointment', component: TakeAppointmentComponent },
   { path: '', redirectTo: 'week', pathMatch: 'full' }
 ];

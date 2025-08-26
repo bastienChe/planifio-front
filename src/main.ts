@@ -13,6 +13,7 @@ import { importProvidersFrom } from '@angular/core';
 import { CommonModule, I18nPluralPipe } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 bootstrapApplication(App, {
   providers: [

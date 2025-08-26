@@ -35,7 +35,7 @@ import { EVENT_COLORS, getRandomColor, getRandomColorName } from '../../shared/e
   ],
   templateUrl: './user-week-view.html',
 })
-export class UserWeekView implements OnInit {
+export class UserWeekViewComponent implements OnInit {
 
   @Input() userId: string = '1'; // par défaut utilisateur 1
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
