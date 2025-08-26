@@ -1,29 +1,14 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
-import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth, addHours } from 'date-fns';
+import { Component, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
+import {startOfDay,endOfDay,isSameDay,isSameMonth, addHours } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {CalendarDateFormatter, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,CalendarView } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
 import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CalendarService } from '../../services/calendar.services';
-import { map } from 'rxjs/operators';
 import { UserService, UserDto } from '../../services/user.service';
+import { EVENT_COLORS, getRandomColor, getRandomColorName } from '../../shared/event-color';
 
-const colors: Record<string, EventColor> = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
 
 @Component({
   selector: 'user-week-view',
@@ -117,7 +102,7 @@ ngOnInit() {
         title: 'New event',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
-        color: colors['red'],
+        color: getRandomColor(),
         draggable: true,
         resizable: {
           beforeStart: true,
