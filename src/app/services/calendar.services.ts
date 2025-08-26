@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { of, Observable, BehaviorSubject } from 'rxjs';
 import { User } from '../models/user';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarService {  
 
-    private _events = new Map<string, BehaviorSubject<CalendarEvent[]>>();
+  private _events = new Map<string, BehaviorSubject<CalendarEvent[]>>();
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this._events.set(
       '1',
       new BehaviorSubject<CalendarEvent[]>([
@@ -51,6 +53,7 @@ export class CalendarService {
   }
 
   getUserEvents$(userId: string): Observable<CalendarEvent[]> {
+  console.log("CalendarService: fetching events for user", userId);
     return this._events.get(userId)?.asObservable() || 
       new BehaviorSubject<CalendarEvent[]>([]).asObservable();
   }

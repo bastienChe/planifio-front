@@ -7,7 +7,7 @@
       [ngModel]="userId"
       (ngModelChange)="onUserChange($event)"
     >
-      <option value="" disabled selected>Sélectionner un utilisateur</option>
+      <option value="" disabled >Sélectionner un utilisateur</option>
       <option *ngFor="let u of users" [value]="u.id">{{ u.name }}</option>
     </select>
   </div>
@@ -50,24 +50,9 @@
     <div class="btn-group">
       <div
         class="btn btn-primary"
-        (click)="setView(CalendarView.Month)"
-        [class.active]="view === CalendarView.Month"
-      >
-        Month
-      </div>
-      <div
-        class="btn btn-primary"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week"
       >
-        Week
-      </div>
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Day)"
-        [class.active]="view === CalendarView.Day"
-      >
-        Day
       </div>
     </div>
   </div>

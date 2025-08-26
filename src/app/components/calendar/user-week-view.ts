@@ -27,7 +27,6 @@ const colors: Record<string, EventColor> = {
 
 @Component({
   selector: 'user-week-view',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
   providers: [CalendarDateFormatter, FlatpickrDefaults],
   styles: [
@@ -74,6 +73,7 @@ export class UserWeekView implements OnInit {
   
 ngOnInit() {
     this.userService.getUsers().subscribe(users => {
+      console.log('UserWeekView: users loaded', users);
       this.users = users;
       if (users.length && !this.userId) {
         this.userId = this.userId = '';
@@ -88,6 +88,7 @@ ngOnInit() {
   }
 
   private loadEvents() {
+    console.log(`UserWeekView: loading events for user ${this.userId}`);
     this.events$ = this.calendarService.getUserEvents$(this.userId);
   }
 

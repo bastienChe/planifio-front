@@ -12,6 +12,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { importProvidersFrom } from '@angular/core';
 import { CommonModule, I18nPluralPipe } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(App, {
   providers: [
@@ -21,6 +22,7 @@ bootstrapApplication(App, {
     CalendarEventTitleFormatter,
     I18nPluralPipe,
     provideAnimations(),
+    provideHttpClient(),
     provideRouter(routes),
     importProvidersFrom(CommonModule) // pour _I18nPluralPipe et autres pipes
   ]
