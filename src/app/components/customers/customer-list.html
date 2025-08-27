@@ -24,9 +24,9 @@
                 <td>{{customer.email}}</td>
                 <td>{{customer.phone}}</td>
                 <td>{{customer.address}}</td>
-                <td>{{customer.optinNewsletter}}</td>
-                <td>{{customer.optinSms}}</td>
-                <td><a [routerLink]="[customer.id]"> detail </a></td>
+                <td>{{ customer.optinNewsletter ? '✔️' : '❌' }}</td>
+                <td>{{ customer.optinSms ? '✔️' : '❌' }}</td>
+                <td><a [routerLink]="[customer.id]">Détail</a></td>
             </tr>
         </ng-container>
     </tbody>

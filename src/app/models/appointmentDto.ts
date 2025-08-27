@@ -1,5 +1,5 @@
 
-export interface Appointment {
+export interface AppointmentDto {
   id: string;
   name: string;
   durationMinutes: number;

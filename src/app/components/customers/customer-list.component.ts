@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule} from '@angular/router';
-import { CustomerDto } from '../../../models/customerDto';
-import { CustomerService } from '../../../services/customers.service';
+import { CustomerDto } from '../../models/customerDto';
+import { CustomerService } from '../../services/customer.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 

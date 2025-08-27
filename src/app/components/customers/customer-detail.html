@@ -1,0 +1,16 @@
+<div *ngIf="customer$ | async as customer">
+  <h2>Détails du client</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>Prénom :</strong> {{ customer.firstName }}</li>
+    <li class="list-group-item"><strong>Nom :</strong> {{ customer.lastName }}</li>
+    <li class="list-group-item"><strong>Genre :</strong> {{ customer.gender }}</li>
+    <li class="list-group-item"><strong>Date de naissance :</strong> {{ customer.birthDate }}</li>
+    <li class="list-group-item"><strong>Email :</strong> {{ customer.email }}</li>
+    <li class="list-group-item"><strong>Téléphone :</strong> {{ customer.phone }}</li>
+    <li class="list-group-item"><strong>Adresse :</strong> {{ customer.address }}</li>
+    <li class="list-group-item"><strong>Newsletter :</strong> {{ customer.optinNewsletter ? '✔️' : '❌' }}</li>
+    <li class="list-group-item"><strong>SMS :</strong> {{ customer.optinSms ? '✔️' : '❌' }}</li>
+  </ul>
+  <br />
+  <a routerLink="/customers" class="btn btn-secondary">Retour à la liste</a>
+</div>

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { AppointmentService } from "../../services/appointments.services";
-import { Appointment } from "../../models/appointment";
+import { AppointmentService } from "../../services/appointment.services";
+import { AppointmentDto } from "../../models/appointmentDto";
 import { Observable } from "rxjs";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './take-appointment.html',
 })
 export class TakeAppointmentComponent {
-  appointments$: Observable<Appointment[]>;
+  appointments$: Observable<AppointmentDto[]>;
 
   selectedAppointmentId?: string; // pour récupérer la sélection
 

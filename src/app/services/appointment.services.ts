@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Appointment } from '../models/appointment';
+import { AppointmentDto } from '../models/appointmentDto';
 import { delay, Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
 
-private _appointments: Appointment[];
+private _appointments: AppointmentDto[];
 
   constructor() {
     this._appointments = [
@@ -15,7 +15,7 @@ private _appointments: Appointment[];
     ];
   }
 
-  getAvaibleAppointments$(): Observable<Appointment[]> {
+  getAvaibleAppointments$(): Observable<AppointmentDto[]> {
     return of(this._appointments).pipe(
       delay(100)
     );
