@@ -1,13 +1,13 @@
 import { Component, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
-import {startOfDay,endOfDay,isSameDay,isSameMonth, addHours } from 'date-fns';
+import {startOfDay,endOfDay,isSameDay,isSameMonth } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CalendarDateFormatter, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,CalendarView } from 'angular-calendar';
+import {CalendarDateFormatter, CalendarEvent,CalendarView } from 'angular-calendar';
 import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CalendarService } from '../../services/calendar.services';
 import { EmployeeService, EmployeeDto } from '../../services/employee.service';
-import { EVENT_COLORS, getRandomColor, getRandomColorName } from '../../shared/event-color';
+import { getRandomColor } from '../../shared/event-color';
 
 
 @Component({

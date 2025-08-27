@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 
 export interface EmployeeDto {
   id: string;
@@ -13,13 +13,13 @@ export class EmployeeService {
 
   // Mock API call
   getEmployees(): Observable<EmployeeDto[]> {
-    const mockUsers: EmployeeDto[] = [
+    const mockEmployees: EmployeeDto[] = [
       { id: '1', name: 'Utilisateur 1' },
       { id: '2', name: 'Utilisateur 2' },
       { id: '3', name: 'Utilisateur 3' },
     ];
 
     // simulate réseau avec délai 500ms
-    return of(mockUsers).pipe(delay(500));
+    return of(mockEmployees).pipe(delay(500));
   }
 }

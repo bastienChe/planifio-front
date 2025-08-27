@@ -1,0 +1,34 @@
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">firstName</th>
+        <th scope="col">lastName</th>
+        <th scope="col">gender</th>
+        <th scope="col">birthDate</th>
+        <th scope="col">email</th>
+        <th scope="col">phone</th>
+        <th scope="col">address</th>
+        <th scope="col">optinNewsletter</th>
+        <th scope="col">optinSms</th>
+        <th scope="col">details</th>
+      </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="customers$ | async as customers">
+            <tr *ngFor="let customer of customers">
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+                <td>{{customer.gender}}</td>
+                <td>{{customer.birthDate}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.phone}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.optinNewsletter}}</td>
+                <td>{{customer.optinSms}}</td>
+                <td><a [routerLink]="[customer.id]"> detail </a></td>
+            </tr>
+        </ng-container>
+    </tbody>
+  <br>
+  </table>    
