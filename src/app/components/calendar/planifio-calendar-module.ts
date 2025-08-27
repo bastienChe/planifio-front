@@ -5,7 +5,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserWeekViewComponent } from './user-week-view.component';
+import { EmployeeWeekViewComponent } from './employee-week-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     }),
   ],
   providers: [CalendarDateFormatter],
-  declarations: [UserWeekViewComponent],
-  exports: [UserWeekViewComponent],
+  declarations: [EmployeeWeekViewComponent],
+  exports: [EmployeeWeekViewComponent],
 })
 export class PlanifioCalendarModule {}

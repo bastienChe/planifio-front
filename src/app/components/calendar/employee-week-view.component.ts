@@ -6,12 +6,12 @@ import {CalendarDateFormatter, CalendarEvent, CalendarEventAction, CalendarEvent
 import { FlatpickrDefaults } from 'angularx-flatpickr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CalendarService } from '../../services/calendar.services';
-import { UserService, UserDto } from '../../services/user.service';
+import { EmployeeService, EmployeeDto } from '../../services/employee.service';
 import { EVENT_COLORS, getRandomColor, getRandomColorName } from '../../shared/event-color';
 
 
 @Component({
-  selector: 'user-week-view',
+  selector: 'employee-week-view',
   standalone: false,
   providers: [CalendarDateFormatter, FlatpickrDefaults],
   styles: [
@@ -33,11 +33,11 @@ import { EVENT_COLORS, getRandomColor, getRandomColorName } from '../../shared/e
       transition('void <=> *', animate('300ms ease')),
     ]),
   ],
-  templateUrl: './user-week-view.html',
+  templateUrl: './employee-week-view.html',
 })
-export class UserWeekViewComponent implements OnInit {
+export class EmployeeWeekViewComponent implements OnInit {
 
-  @Input() userId: string = '1'; // par défaut utilisateur 1
+  @Input() employeeId: string = '1'; // par défaut utilisateur 1
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
   events$!: Observable<CalendarEvent[]>; 
   view: CalendarView = CalendarView.Week;
@@ -45,7 +45,7 @@ export class UserWeekViewComponent implements OnInit {
   viewDate: Date = new Date();
   refresh = new Subject<void>();
   activeDayIsOpen: boolean = true;
-  users: UserDto[] = [];
+  employees: EmployeeDto[] = [];
 
   modalData?: {
     action: string;
@@ -54,27 +54,27 @@ export class UserWeekViewComponent implements OnInit {
 
   constructor(private modal: NgbModal, 
     private calendarService: CalendarService,
-    private userService: UserService) { }
+    private employeeService: EmployeeService) { }
   
 ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
-      console.log('UserWeekView: users loaded', users);
-      this.users = users;
-      if (users.length && !this.userId) {
-        this.userId = this.userId = '';
+    this.employeeService.getEmployees().subscribe(employees => {
+      console.log('EmployeeWeekView: employees loaded', employees);
+      this.employees = employees;
+      if (employees.length && !this.employeeId) {
+        this.employeeId = this.employeeId = '';
       }
       this.loadEvents();
     });
 }
 
-  onUserChange(userId: string) {
-    this.userId = userId;
+  onEmployeeChange(employeeId: string) {
+    this.employeeId = employeeId;
     this.loadEvents();
   }
 
   private loadEvents() {
-    console.log(`UserWeekView: loading events for user ${this.userId}`);
-    this.events$ = this.calendarService.getUserEvents$(this.userId);
+    console.log(`EmployeeWeekView: loading events for employee ${this.employeeId}`);
+    this.events$ = this.calendarService.getEmployeeEvents$(this.employeeId);
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

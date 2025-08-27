@@ -1,14 +1,14 @@
 <div class="row mb-3">
   <div class="col-md-4">
-    <label for="userSelect">Sélectionner un utilisateur :</label>
+    <label for="employeeSelect">Sélectionner un employé :</label>
     <select
-      id="userSelect"
+      id="employeeSelect"
       class="form-select"
-      [ngModel]="userId"
-      (ngModelChange)="onUserChange($event)"
+      [ngModel]="employeeId"
+      (ngModelChange)="onEmployeeChange($event)"
     >
-      <option value="" disabled >Sélectionner un utilisateur</option>
-      <option *ngFor="let u of users" [value]="u.id">{{ u.name }}</option>
+      <option value="" disabled >Sélectionner un employé</option>
+      <option *ngFor="let e of employees" [value]="e.id">{{ e.name }}</option>
     </select>
   </div>
 </div>

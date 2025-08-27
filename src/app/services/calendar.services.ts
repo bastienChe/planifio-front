@@ -53,28 +53,28 @@ export class CalendarService {
     );
   }
 
-  getUserEvents$(userId: string): Observable<CalendarEvent[]> {
-  console.log("CalendarService: fetching events for user", userId);
-    return this.events$.get(userId)?.asObservable() || 
+  getEmployeeEvents$(employeeId: string): Observable<CalendarEvent[]> {
+  console.log("CalendarService: fetching events for employee", employeeId);
+    return this.events$.get(employeeId)?.asObservable() || 
       new BehaviorSubject<CalendarEvent[]>([]).asObservable();
   }
 
-  addEvent(userId: string, event: CalendarEvent) {
-    const subject = this.events$.get(userId);
+  addEvent(employeeId: string, event: CalendarEvent) {
+    const subject = this.events$.get(employeeId);
     if (subject) {
       subject.next([...subject.value, event]);
     }
   }
 
-  updateEvent(userId: string, updated: CalendarEvent) {
-    const subject = this.events$.get(userId);
+  updateEvent(employeeId: string, updated: CalendarEvent) {
+    const subject = this.events$.get(employeeId);
     if (subject) {
       subject.next(subject.value.map(e => e === updated ? updated : e));
     }
   }
 
-  deleteEvent(userId: string, event: CalendarEvent) {
-    const subject = this.events$.get(userId);
+  deleteEvent(employeeId: string, event: CalendarEvent) {
+    const subject = this.events$.get(employeeId);
     if (subject) {
       subject.next(subject.value.filter(e => e !== event));
     }
