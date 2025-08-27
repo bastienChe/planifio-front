@@ -1,16 +1,34 @@
-<div *ngIf="customer$ | async as customer">
-  <h2>Détails du client</h2>
-  <ul class="list-group">
-    <li class="list-group-item"><strong>Prénom :</strong> {{ customer.firstName }}</li>
-    <li class="list-group-item"><strong>Nom :</strong> {{ customer.lastName }}</li>
-    <li class="list-group-item"><strong>Genre :</strong> {{ customer.gender }}</li>
-    <li class="list-group-item"><strong>Date de naissance :</strong> {{ customer.birthDate }}</li>
-    <li class="list-group-item"><strong>Email :</strong> {{ customer.email }}</li>
-    <li class="list-group-item"><strong>Téléphone :</strong> {{ customer.phone }}</li>
-    <li class="list-group-item"><strong>Adresse :</strong> {{ customer.address }}</li>
-    <li class="list-group-item"><strong>Newsletter :</strong> {{ customer.optinNewsletter ? '✔️' : '❌' }}</li>
-    <li class="list-group-item"><strong>SMS :</strong> {{ customer.optinSms ? '✔️' : '❌' }}</li>
-  </ul>
-  <br />
-  <a routerLink="/customers" class="btn btn-secondary">Retour à la liste</a>
-</div>
+<section class="page-section client" id="client">
+  <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Visualisation Client</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+          <!-- Portfolio Item 1-->
+          
+        <div *ngIf="customer$ | async as customer">
+        <h2>Détails du client</h2>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Prénom :</strong> {{ customer.firstName }}</li>
+          <li class="list-group-item"><strong>Nom :</strong> {{ customer.lastName }}</li>
+          <li class="list-group-item"><strong>Genre :</strong> {{ customer.gender }}</li>
+          <li class="list-group-item"><strong>Date de naissance :</strong> {{ customer.birthDate }}</li>
+          <li class="list-group-item"><strong>Email :</strong> {{ customer.email }}</li>
+          <li class="list-group-item"><strong>Téléphone :</strong> {{ customer.phone }}</li>
+          <li class="list-group-item"><strong>Adresse :</strong> {{ customer.address }}</li>
+          <li class="list-group-item"><strong>Newsletter :</strong> {{ customer.optinNewsletter ? '✔️' : '❌' }}</li>
+          <li class="list-group-item"><strong>SMS :</strong> {{ customer.optinSms ? '✔️' : '❌' }}</li>
+        </ul>
+        <br />
+        <a routerLink="/customers" class="btn btn-secondary">Retour à la liste</a>
+      </div> 
+
+      </div>
+  </div>
+</section>

@@ -1,34 +1,51 @@
+<section class="page-section clients" id="clients">
+  <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Mes Clients</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+          <!-- Portfolio Item 1-->
+          
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">firstName</th>
+                <th scope="col">lastName</th>
+                <th scope="col">gender</th>
+                <th scope="col">birthDate</th>
+                <th scope="col">email</th>
+                <th scope="col">phone</th>
+                <th scope="col">address</th>
+                <th scope="col">optinNewsletter</th>
+                <th scope="col">optinSms</th>
+                <th scope="col">details</th>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="customers$ | async as customers">
+                    <tr *ngFor="let customer of customers">
+                        <td>{{customer.firstName}}</td>
+                        <td>{{customer.lastName}}</td>
+                        <td>{{customer.gender}}</td>
+                        <td>{{customer.birthDate}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{ customer.optinNewsletter ? '✔️' : '❌' }}</td>
+                        <td>{{ customer.optinSms ? '✔️' : '❌' }}</td>
+                        <td><a [routerLink]="[customer.id]">Détail</a></td>
+                    </tr>
+                </ng-container>
+            </tbody>
+          <br>
+          </table>    
 
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">firstName</th>
-        <th scope="col">lastName</th>
-        <th scope="col">gender</th>
-        <th scope="col">birthDate</th>
-        <th scope="col">email</th>
-        <th scope="col">phone</th>
-        <th scope="col">address</th>
-        <th scope="col">optinNewsletter</th>
-        <th scope="col">optinSms</th>
-        <th scope="col">details</th>
-      </tr>
-    </thead>
-    <tbody>
-        <ng-container *ngIf="customers$ | async as customers">
-            <tr *ngFor="let customer of customers">
-                <td>{{customer.firstName}}</td>
-                <td>{{customer.lastName}}</td>
-                <td>{{customer.gender}}</td>
-                <td>{{customer.birthDate}}</td>
-                <td>{{customer.email}}</td>
-                <td>{{customer.phone}}</td>
-                <td>{{customer.address}}</td>
-                <td>{{ customer.optinNewsletter ? '✔️' : '❌' }}</td>
-                <td>{{ customer.optinSms ? '✔️' : '❌' }}</td>
-                <td><a [routerLink]="[customer.id]">Détail</a></td>
-            </tr>
-        </ng-container>
-    </tbody>
-  <br>
-  </table>    
+      </div>
+  </div>
+</section>
