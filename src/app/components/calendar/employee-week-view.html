@@ -1,71 +1,94 @@
-<div class="row mb-3">
-  <div class="col-md-4">
-    <label for="employeeSelect">Sélectionner un employé :</label>
-    <select
-      id="employeeSelect"
-      class="form-select"
-      [ngModel]="employeeId"
-      (ngModelChange)="onEmployeeChange($event)"
-    >
-      <option value="" disabled >Sélectionner un employé</option>
-      <option *ngFor="let e of employees" [value]="e.id">{{ e.name }}</option>
-    </select>
-  </div>
-</div>
+<br>
+<br>
+<section class="page-section clients" id="clients">
+  <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">RDV de mon équipe</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+          <!-- Portfolio Item 1-->
+          
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="employeeSelect">Sélectionner un employé :</label>
+            <select
+              id="employeeSelect"
+              class="form-select"
+              [ngModel]="employeeId"
+              (ngModelChange)="onEmployeeChange($event)"
+            >
+              <option value="" disabled >Sélectionner un employé</option>
+              <option *ngFor="let e of employees" [value]="e.id">{{ e.name }}</option>
+            </select>
+          </div>
+        </div>
 
-<div class="row text-center">
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()"
-      >
-        Previous
-      </div>
-      <div
-        class="btn btn-outline-secondary"
-        mwlCalendarToday
-        [(viewDate)]="viewDate"
-      >
-        Today
-      </div>
-      <div
-        class="btn btn-primary"
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()"
-      >
-        Next
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Week)"
-        [class.active]="view === CalendarView.Week"
-      >
-      </div>
-    </div>
-  </div>
-</div>
-<br />
-<div [ngSwitch]="view">
-  <mwl-calendar-week-view
-    *ngSwitchCase="CalendarView.Week"
-    [viewDate]="viewDate"
-    [events]="(events$ | async) || []"
-    [refresh]="refresh"
-  >
-  </mwl-calendar-week-view>
-</div>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-primary"
+                mwlCalendarPreviousView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                <
+              </div>
+              <div
+                class="btn btn-outline-secondary"
+                mwlCalendarToday
+                [(viewDate)]="viewDate"
+              >
+                Semaine
+              </div>
+              <div
+                class="btn btn-primary"
+                mwlCalendarNextView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-primary"
+                (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week"
+              >
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [dayStartHour]="7"
+            [dayEndHour]="20"
+            [events]="(events$ | async) || []"
+            [refresh]="refresh"
+          >
+          </mwl-calendar-week-view>
+        </div>
 
+
+
+      </div>
+  </div>
+</section>
 
