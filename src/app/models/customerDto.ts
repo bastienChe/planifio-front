@@ -8,6 +8,11 @@ export interface CustomerDto {
     email: string;
     phone: string;
     address: string;
+    registrationDate: string;
+    lastPurchaseDate: string;
+    orderCount: number;
+    totalSpent: number;
     optinNewsletter: boolean;
     optinSms: boolean;
+    rating: number;
 }

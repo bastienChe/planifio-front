@@ -1,34 +1,105 @@
-<section class="page-section client" id="client">
-  <div class="container">
-      <!-- Portfolio Section Heading-->
-      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Visualisation Client</h2>
-      <!-- Icon Divider-->
-      <div class="divider-custom">
-          <div class="divider-custom-line"></div>
-          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-          <div class="divider-custom-line"></div>
-      </div>
-      <!-- Portfolio Grid Items-->
-      <div class="row justify-content-center">
-          <!-- Portfolio Item 1-->
-          
-        <div *ngIf="customer$ | async as customer">
-        <h2>Détails du client</h2>
-        <ul class="list-group">
-          <li class="list-group-item"><strong>Prénom :</strong> {{ customer.firstName }}</li>
-          <li class="list-group-item"><strong>Nom :</strong> {{ customer.lastName }}</li>
-          <li class="list-group-item"><strong>Genre :</strong> {{ customer.gender }}</li>
-          <li class="list-group-item"><strong>Date de naissance :</strong> {{ customer.birthDate }}</li>
-          <li class="list-group-item"><strong>Email :</strong> {{ customer.email }}</li>
-          <li class="list-group-item"><strong>Téléphone :</strong> {{ customer.phone }}</li>
-          <li class="list-group-item"><strong>Adresse :</strong> {{ customer.address }}</li>
-          <li class="list-group-item"><strong>Newsletter :</strong> {{ customer.optinNewsletter ? '✔️' : '❌' }}</li>
-          <li class="list-group-item"><strong>SMS :</strong> {{ customer.optinSms ? '✔️' : '❌' }}</li>
-        </ul>
-        <br />
-        <a routerLink="/customers" class="btn btn-secondary">Retour à la liste</a>
-      </div> 
+  <section class="page-section client" id="client" >
+  <div class="container mt-5" *ngIf="customer$ | async as customer">
+    <div class="row">
+      <!-- Carte info principale -->
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-header bg-primary text-white text-center py-4">
+            <h3 class="mb-0">Détails du client</h3>
+          </div>
+          <div class="card-body p-4">
 
+            <!-- Infos principales -->
+            <div class="d-flex align-items-center mb-4">
+              <img src="https://via.placeholder.com/80" class="rounded-circle me-3 border" alt="Client">
+              <div>
+                <h4 class="mb-1"> {{ customer.firstName }}  {{ customer.lastName }} <span class="badge" [ngClass]="customer.gender === 'M' ? 'badge-male' : 'badge-female'">{{ customer.gender }}</span></h4>
+                {{ customer.birthDate }} 
+              </div>
+            </div>
+
+            <!-- Infos de contact -->
+            <h5 class="text-secondary mb-3">Informations de contact</h5>
+            <ul class="list-group list-group-flush mb-4">
+              <li class="list-group-item"><strong>Email :</strong> {{ customer.email }}</li>
+              <li class="list-group-item"><strong>Téléphone :</strong> {{ customer.phone }} </li>
+              <li class="list-group-item"><strong>Adresse :</strong> {{ customer.address }} </li>
+            </ul>
+
+            <!-- Infos business -->
+            <h5 class="text-secondary mb-3">Détails professionnels</h5>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Date d’inscription :</strong> {{ customer.registrationDate }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Dernier achat :</strong> {{ customer.lastPurchaseDate }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Nombre de commandes :</strong> {{ customer.orderCount }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Total achats :</strong> {{ customer.totalSpent }}
+                </div>
+              </div>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+              <div class="card-body text-center">
+                <h6 class="card-subtitle text-muted">Note</h6>
+                <div class="rating-stars" title="{{ (customer.rating || 0) + '/5' }}">
+                  <div class="stars-outer" aria-hidden="true">
+                    <span class="star" *ngFor="let s of [1,2,3,4,5]">☆</span>
+                    <!-- overlay : largeur proportionnelle à rating/5 -->
+                    <div class="stars-inner"
+                        [style.width.%]="(customer.rating || 0) / 5 * 100">
+                      <span class="star" *ngFor="let s of [1,2,3,4,5]">★</span>
+                    </div>
+                  </div>
+                  <small class="ms-2">{{ (customer.rating || 0) | number:'1.1-1' }}/5</small>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Infos business -->
+            <h5 class="text-secondary mb-3">Optins</h5>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Newsletter :</strong>{{ customer.optinNewsletter ? '✔️' : '❌' }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded mb-2 bg-light">
+                  <strong>Sms :</strong> {{ customer.optinSms ? '✔️' : '❌' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-between">
+              <a routerLink="/customers" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Retour
+              </a>
+              <div>
+                <button class="btn btn-warning me-2">
+                  <i class="bi bi-pencil"></i> Modifier
+                </button>
+                <button class="btn btn-danger">
+                  <i class="bi bi-trash"></i> Supprimer
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-</section>

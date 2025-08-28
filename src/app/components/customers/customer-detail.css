@@ -1,0 +1,39 @@
+.rating-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* conteneur des étoiles (fond gris) */
+.stars-outer {
+  position: relative;
+  display: inline-block;
+  font-size: 1.6rem; /* adapte la taille ici */
+  line-height: 1;
+  color: #adb5bd; /* couleur étoiles vides */
+  user-select: none;
+}
+
+/* overlay d'étoiles pleines (couleur jaune bootstrap) */
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #ffc107; /* étoile pleine */
+  pointer-events: none; /* pas d'interaction */
+}
+
+/* espacement entre étoiles */
+.star {
+  display: inline-block;
+  padding-right: 4px;
+}
+
+.badge-male {
+  background-color: #a4c9ff; /* bootstrap primary */
+}
+.badge-female {
+  background-color: #fda5ce; /* rose */
+}

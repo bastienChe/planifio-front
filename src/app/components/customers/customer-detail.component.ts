@@ -9,6 +9,7 @@ import { CustomerDto } from '../../models/customerDto';
   selector: 'customer-detail',
   standalone: true,
   imports: [CommonModule, RouterLink],
+  styleUrl: './customer-detail.css',
   templateUrl: './customer-detail.html'
 })
 export class CustomerDetailComponent implements OnInit {

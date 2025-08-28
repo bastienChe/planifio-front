@@ -19,6 +19,11 @@ export class CustomerService {
       address: '12 rue de Paris, Lyon',
       optinNewsletter: true,
       optinSms: false,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c2',
@@ -31,6 +36,11 @@ export class CustomerService {
       address: '34 avenue de la République, Marseille',
       optinNewsletter: false,
       optinSms: true,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c3',
@@ -43,6 +53,11 @@ export class CustomerService {
       address: '56 boulevard Saint-Michel, Paris',
       optinNewsletter: true,
       optinSms: true,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c4',
@@ -55,6 +70,11 @@ export class CustomerService {
       address: '3 rue Victor Hugo, Bordeaux',
       optinNewsletter: false,
       optinSms: false,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c5',
@@ -67,6 +87,11 @@ export class CustomerService {
       address: '27 avenue des Fleurs, Nice',
       optinNewsletter: true,
       optinSms: false,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c6',
@@ -79,6 +104,11 @@ export class CustomerService {
       address: '78 chemin des Oliviers, Montpellier',
       optinNewsletter: false,
       optinSms: true,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c7',
@@ -91,6 +121,11 @@ export class CustomerService {
       address: '14 rue de la Gare, Nantes',
       optinNewsletter: true,
       optinSms: true,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     },
     {
       id: 'c8',
@@ -103,6 +138,11 @@ export class CustomerService {
       address: '99 rue des Lilas, Toulouse',
       optinNewsletter: false,
       optinSms: false,
+      lastPurchaseDate: '2023-10-15',
+      registrationDate: '2021-06-20',
+      orderCount: 15,
+      totalSpent: 2450,
+      rating: Math.floor(Math.random() * 5)
     }
   ];
 
