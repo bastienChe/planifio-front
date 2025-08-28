@@ -14,12 +14,34 @@ export class CalendarService {
       '1',
       new BehaviorSubject<CalendarEvent[]>([
         {
+          start: new Date(new Date().setHours(15, 30, 0, 0)),
+          end: new Date(new Date().setHours(16, 30, 0, 0)),
+          title: 'RDV D',
+          color: getRandomColor(),
+        },
+      ])
+    );
+
+    this.events$.set(
+      '1',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
+          start: new Date(new Date().setHours(10, 30, 0, 0)),
+          end: new Date(new Date().setHours(11, 0, 0, 0)),
+          title: 'RDV XX',
+          color: getRandomColor(),
+        },
+      ])
+    );
+
+    this.events$.set(
+      '1',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
           start: new Date(new Date().setHours(8, 30, 0, 0)),
           end: new Date(new Date().setHours(9, 0, 0, 0)),
           title: 'RDV Tom',
           color: getRandomColor(),
-          draggable: true,
-          resizable: { beforeStart: true, afterEnd: true },
         },
       ])
     );
@@ -32,8 +54,30 @@ export class CalendarService {
           end: new Date(new Date().setHours(10, 30, 0, 0)),
           title: 'RDV Mr X',
           color: getRandomColor(),
-          draggable: true,
-          resizable: { beforeStart: true, afterEnd: true },
+        },
+      ])
+    );
+
+    this.events$.set(
+      '2',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
+          start: new Date(new Date().setHours(15, 0, 0, 0)),
+          end: new Date(new Date().setHours(15, 30, 0, 0)),
+          title: 'RDV Mr XDsza',
+          color: getRandomColor(),
+        },
+      ])
+    );
+
+    this.events$.set(
+      '2',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
+          start: new Date(new Date().setHours(12, 0, 0, 0)),
+          end: new Date(new Date().setHours(12, 30, 0, 0)),
+          title: 'RDV Mr Drvsd',
+          color: getRandomColor(),
         },
       ])
     );
@@ -46,8 +90,30 @@ export class CalendarService {
           end: new Date(new Date().setHours(15, 0, 0, 0)),
           title: 'RDV client',
           color: getRandomColor(),
-          draggable: true,
-          resizable: { beforeStart: true, afterEnd: true },
+        },
+      ])
+    );
+
+    this.events$.set(
+      '3',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
+          start: new Date(new Date().setHours(14, 0, 0, 0)),
+          end: new Date(new Date().setHours(14, 30, 0, 0)),
+          title: 'RDV client DSF',
+          color: getRandomColor(),
+        },
+      ])
+    );
+
+    this.events$.set(
+      '3',
+      new BehaviorSubject<CalendarEvent[]>([
+        {
+          start: new Date(new Date().setHours(12, 0, 0, 0)),
+          end: new Date(new Date().setHours(13, 0, 0, 0)),
+          title: 'RDV client FEzd',
+          color: getRandomColor(),
         },
       ])
     );

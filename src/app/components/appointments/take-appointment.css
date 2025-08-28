@@ -1,0 +1,31 @@
+.time-slot {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  margin: 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  transition: 0.2s;
+}
+
+.time-slot:hover {
+  background-color: #f0f0f0;
+}
+
+.time-slot.selected {
+  background-color: #0d6efd; /* bleu Bootstrap */
+  color: white;
+  border-color: #0a58ca;
+}
+.wizard-container {
+  position: relative;
+  min-height: 500px; /* fixe la hauteur du conteneur pour éviter les sauts */
+}
+
+.wizard-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
