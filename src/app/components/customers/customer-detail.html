@@ -11,7 +11,12 @@
 
             <!-- Infos principales -->
             <div class="d-flex align-items-center mb-4">
-              <img src="https://via.placeholder.com/80" class="rounded-circle me-3 border" alt="Client">
+              <!--<img src="https://via.placeholder.com/80" class="rounded-circle me-3 border" alt="Client">
+            --><div class="avatar-circle me-3">
+                <span class="avatar-text">
+                  {{ customer.lastName[0] }}{{ customer.firstName[0] }}
+                </span>
+              </div>
               <div>
                 <h4 class="mb-1"> {{ customer.firstName }}  {{ customer.lastName }} <span class="badge" [ngClass]="customer.gender === 'M' ? 'badge-male' : 'badge-female'">{{ customer.gender }}</span></h4>
                 {{ customer.birthDate }} 

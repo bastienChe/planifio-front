@@ -13,8 +13,71 @@
       <!-- Portfolio Grid Items-->
       <div class="row justify-content-center">
           <!-- Portfolio Item 1-->
+<div class="container mt-4">
 
+  <!-- Filtres -->
+  <div class="row mb-3 g-2 align-items-end">
+    <div class="col-md-4">
+      <label for="filterName" class="form-label">Rechercher par nom ou email :</label>
+      <input type="text" id="filterName" class="form-control" [(ngModel)]="filterText" placeholder="Nom ou email">
+    </div>
+    <div class="col-md-2">
+      <label for="filterGender" class="form-label">Genre :</label>
+      <select id="filterGender" class="form-select" [(ngModel)]="filterGender">
+        <option value="">Tous</option>
+        <option value="M">Homme</option>
+        <option value="F">Femme</option>
+      </select>
+    </div>
+  </div>
 
+  <!-- Tableau clients -->
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Avatar</th>
+          <th>Nom / Prénom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Genre</th>
+          <th>Score</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of (customers$ | async) | filterCustomers:filterText:filterGender">
+          <!-- Avatar -->
+          <td>
+            <div class="avatar-circle">
+              {{ customer.lastName[0] }}{{ customer.firstName[0] }}
+            </div>
+          </td>
+          <!-- Nom / Prénom -->
+          <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+          <!-- Email -->
+          <td>{{ customer.email }}</td>
+          <!-- Téléphone -->
+          <td>{{ customer.phone }}</td>
+          <!-- Genre -->
+          <td>
+            <span class="badge" [ngClass]="customer.gender === 'M' ? 'badge-male' : 'badge-female'">{{ customer.gender }}</span>
+          </td>
+          <!-- Score -->
+          <td>{{ customer.rating }}</td>
+          <!-- Actions -->
+          <td>
+            <a [routerLink]="[customer.id]" class="btn btn-sm btn-primary me-1">Voir</a>
+            <button class="btn btn-sm btn-warning me-1">Modifier</button>
+            <button class="btn btn-sm btn-danger">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!--
           <div class="col-xl-8">
 							<div class="card">
 								<div class="card-body">
@@ -47,7 +110,7 @@
 								</div>
 							</div>
 						</div> 
-
+-->
       </div>
   </div>
 </section>

@@ -37,3 +37,18 @@
 .badge-female {
   background-color: #fda5ce; /* rose */
 }
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #405980; /* bleu Bootstrap par défaut, tu peux changer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border: 2px solid #ffffff;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
