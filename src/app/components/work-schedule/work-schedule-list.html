@@ -25,70 +25,95 @@
               <option value="F">3</option>
             </select>
           </div>
-          
-          <div class="col-md-2">
-            <label for="filterYear" class="form-label">Année :</label>
-            <select id="filterYear" class="form-select" [(ngModel)]="filterYear">
-              <option value="" selected>2025</option>
-              <option value="2026">2026</option>
-            </select>
+        </div>
+        <div class="row mb-3 g-2 align-items-end">
+          <div class="col-md-3 d-flex align-items-end">
+            <button class="btn btn-outline-primary me-1" (click)="prevWeek()">&lt;</button>
+            <input 
+              id="filterWeek"
+              type="week"
+              class="form-control me-1"
+              [(ngModel)]="filterWeek"
+            />
+            <button class="btn btn-outline-primary" (click)="nextWeek()">&gt;</button>
           </div>
-
-          
-          Week : ActualWeek
 
           <div class="container mt-4">
-  <h2 class="mb-4 text-center">Work Schedule</h2>
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th style="width: 20%">Day</th>
-        <th style="width: 60%">Work Slots</th>
-        <th style="width: 20%">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let day of days">
-        <td class="align-middle fw-bold">{{ day }}</td>
-        <td>
-          <div *ngFor="let slot of schedule[day]; let i = index" class="d-flex align-items-center mb-2">
-            <input
-              type="time"
-              class="form-control me-2"
-              [(ngModel)]="slot.start"
-            />
-            <span class="me-2">–</span>
-            <input
-              type="time"
-              class="form-control me-2"
-              [(ngModel)]="slot.end"
-            />
-            <button
-              class="btn btn-sm btn-outline-danger"
-              (click)="removeSlot(day, i)"
-            >
-              Remove
+          <h2 class="mb-4 text-center">Work Schedule</h2>
+          <table class="table table-bordered table-striped">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 20%">Day</th>
+                <th style="width: 60%">Work Slots</th>
+                <th style="width: 20%">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let day of days">
+                <td class="align-middle fw-bold">{{ day }}</td>
+                <td>
+            <div *ngFor="let slot of schedule[day]; let i = index" class="d-flex align-items-center mb-2">
+
+  <!-- Start -->
+  <select
+    class="form-select me-1"
+    [(ngModel)]="slot.startHour"
+    [ngModelOptions]="{standalone: true}"
+  >
+    <option *ngFor="let h of hourOptions" [ngValue]="h">{{ h.toString().padStart(2,'0') }}</option>
+  </select>
+  <span class="me-1">:</span>
+  <select
+    class="form-select me-2"
+    [(ngModel)]="slot.startMinute"
+    [ngModelOptions]="{standalone: true}"
+  >
+    <option *ngFor="let m of minuteOptions" [ngValue]="m">{{ m.toString().padStart(2,'0') }}</option>
+  </select>
+
+  <span class="me-2">–</span>
+
+  <!-- End -->
+  <select
+    class="form-select me-1"
+    [(ngModel)]="slot.endHour"
+    [ngModelOptions]="{standalone: true}"
+  >
+    <option *ngFor="let h of hourOptions" [ngValue]="h">{{ h.toString().padStart(2,'0') }}</option>
+  </select>
+  <span class="me-1">:</span>
+  <select
+    class="form-select me-2"
+    [(ngModel)]="slot.endMinute"
+    [ngModelOptions]="{standalone: true}"
+  >
+    <option *ngFor="let m of minuteOptions" [ngValue]="m">{{ m.toString().padStart(2,'0') }}</option>
+  </select>
+
+  <!-- Bouton pour supprimer le créneau -->
+  <button class="btn btn-sm btn-outline-danger" (click)="removeSlot(day, i)">Remove</button>
+</div>
+
+
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="addSlot(day)"
+                  >
+                    + Add Slot
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-success" (click)="saveSchedule()">
+              Save Schedule
             </button>
           </div>
-        </td>
-        <td>
-          <button
-            class="btn btn-sm btn-outline-primary"
-            (click)="addSlot(day)"
-          >
-            + Add Slot
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="text-center mt-4">
-    <button class="btn btn-success" (click)="saveSchedule()">
-      Save Schedule
-    </button>
-  </div>
-</div>
+        </div>
         </div>
       </div>
     </div>
