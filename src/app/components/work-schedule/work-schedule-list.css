@@ -1,0 +1,30 @@
+.badge-male {
+  background-color: #a4c9ff; /* bootstrap primary */
+  width: 30px;
+}
+.badge-female {
+  background-color: #fda5ce; /* rose */
+  width: 30px;
+}
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #405980; /* bleu Bootstrap par défaut, tu peux changer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.75rem;
+    border: 2px solid #ffffff;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+table {
+  width: 100%;
+}
+
+input[type="time"] {
+  max-width: 120px;
+}

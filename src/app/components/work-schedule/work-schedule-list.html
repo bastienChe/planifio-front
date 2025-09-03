@@ -1,0 +1,96 @@
+<br>
+<br>
+<section class="page-section clients" id="clients">
+  <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Work Schedule</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+          <!-- Portfolio Item 1-->
+      <div class="container mt-4">
+
+        <!-- Filtres -->
+        <div class="row mb-3 g-2 align-items-end">
+          <div class="col-md-2">
+            <label for="filterEmployee" class="form-label">Employé :</label>
+            <select id="filterEmployee" class="form-select" [(ngModel)]="filterEmployee">
+              <option value="">1</option>
+              <option value="M">2</option>
+              <option value="F">3</option>
+            </select>
+          </div>
+          
+          <div class="col-md-2">
+            <label for="filterYear" class="form-label">Année :</label>
+            <select id="filterYear" class="form-select" [(ngModel)]="filterYear">
+              <option value="" selected>2025</option>
+              <option value="2026">2026</option>
+            </select>
+          </div>
+
+          
+          Week : ActualWeek
+
+          <div class="container mt-4">
+  <h2 class="mb-4 text-center">Work Schedule</h2>
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th style="width: 20%">Day</th>
+        <th style="width: 60%">Work Slots</th>
+        <th style="width: 20%">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of days">
+        <td class="align-middle fw-bold">{{ day }}</td>
+        <td>
+          <div *ngFor="let slot of schedule[day]; let i = index" class="d-flex align-items-center mb-2">
+            <input
+              type="time"
+              class="form-control me-2"
+              [(ngModel)]="slot.start"
+            />
+            <span class="me-2">–</span>
+            <input
+              type="time"
+              class="form-control me-2"
+              [(ngModel)]="slot.end"
+            />
+            <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="removeSlot(day, i)"
+            >
+              Remove
+            </button>
+          </div>
+        </td>
+        <td>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            (click)="addSlot(day)"
+          >
+            + Add Slot
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-success" (click)="saveSchedule()">
+      Save Schedule
+    </button>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
