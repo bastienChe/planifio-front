@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { WorkScheduleService } from '../../services/work-schedule.service';
 import { EmployeeDto, EmployeeService } from '../../services/employee.service';
 import { Observable } from 'rxjs';
+import { ViewChild } from '@angular/core';
+import { ConfirmDialogComponent } from './confirm-dialog.component';
 
 export interface WorkSlot {
   startHour: number;
@@ -34,18 +36,22 @@ export const DAYS_OF_WEEK = [
 @Component({
   selector: 'customer-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ConfirmDialogComponent],
   templateUrl: './work-schedule-list.html',
   styleUrls: ['./work-schedule-list.css'],
   providers: [WorkScheduleService]
 })
 export class WorkScheduleComponent implements OnInit {
+  @ViewChild(ConfirmDialogComponent) confirmDialog!: ConfirmDialogComponent;
 
   filterEmployee = '';
   filterYear = '';
   filterWeek: string = this.getCurrentWeek();
+  previousEmployee = '';
+  previousWeek = this.filterWeek
 
   days = DAYS_OF_WEEK;
+  dirty = false;
 
   hourOptions: number[] = [];
   minuteOptions: number[] = [0, 15, 30, 45];
@@ -66,8 +72,45 @@ export class WorkScheduleComponent implements OnInit {
   }  
   
   onEmployeeChange() {
-    console.log('Employé sélectionné :', this.filterEmployee);
+    if (this.dirty) {
+      this.confirmDialog.open(
+        () => { // si continue
+          this.previousEmployee = this.filterEmployee;
+          this.resetWorkSlots();
+        },
+        () => { // si annule
+          this.filterEmployee = this.previousEmployee;
+        }
+      );
+    } else {
+      this.previousEmployee = this.filterEmployee;
+      this.resetWorkSlots();
+    }
     // this.workScheduleService.loadSchedule(this.filterEmployee, week, year).subscribe(...)
+  }
+
+  onWeekChange() {
+    if (this.dirty) {
+      this.confirmDialog.open(
+        () => { // si continue
+          this.previousWeek = this.filterWeek;
+          this.resetWorkSlots();
+        },
+        () => { // si annule
+          this.filterWeek = this.previousWeek;
+        }
+      );
+    } else {
+      this.previousWeek = this.filterWeek;
+      this.resetWorkSlots();
+    }
+  }
+
+  resetWorkSlots() {  
+    this.schedule = this.days.reduce((acc, day) => {
+      acc[day] = [];
+      return acc;
+    }, {} as WorkSchedule);
   }
 
   generateHourOptions() {
@@ -76,7 +119,7 @@ export class WorkScheduleComponent implements OnInit {
       this.hourOptions.push(h);
     }
   }
-  // --- Filtre semaine ---
+
   getCurrentWeek(): string {
     const now = new Date();
     const onejan = new Date(now.getFullYear(), 0, 1);
@@ -84,8 +127,13 @@ export class WorkScheduleComponent implements OnInit {
     return `${now.getFullYear()}-W${week.toString().padStart(2, '0')}`;
   }
 
-  nextWeek() { this.changeWeek(1); }
-  prevWeek() { this.changeWeek(-1); }
+  nextWeek() { 
+    this.changeWeek(1); 
+  }
+
+  prevWeek() { 
+    this.changeWeek(-1); 
+  }
 
   private changeWeek(delta: number) {
     const [yearStr, weekStr]: string[] = this.filterWeek.split('-W');
@@ -101,6 +149,7 @@ export class WorkScheduleComponent implements OnInit {
     }
 
     this.filterWeek = `${year}-W${week.toString().padStart(2, '0')}`;
+    this.onWeekChange();
   }
 
   private getWeeksInYear(year: number): number {
@@ -109,17 +158,18 @@ export class WorkScheduleComponent implements OnInit {
     return week;
   }
 
-  // --- Gestion des créneaux ---
   addSlot(day: string) {
     this.schedule[day].push({ startHour: 9, startMinute: 0, endHour: 17, endMinute: 0 });
+    this.dirty = true;
   }
 
   removeSlot(day: string, index: number) {
     this.schedule[day].splice(index, 1);
+    this.dirty = true;
   }
 
-  // --- Transformation pour backend ---
   saveSchedule() {
+    this.dirty = true;
     const [yearStr, weekStr]: string[] = this.filterWeek.split('-W');
     const yearNumber = Number(yearStr);
     const weekNumber = Number(weekStr);

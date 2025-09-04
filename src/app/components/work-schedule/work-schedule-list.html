@@ -37,6 +37,7 @@
               type="week"
               class="form-control me-1"
               [(ngModel)]="filterWeek"
+              (change)="onWeekChange()"
             />
             <button class="btn btn-outline-primary" (click)="nextWeek()">&gt;</button>
           </div>
@@ -123,3 +124,5 @@
     </div>
   </div>
 </section>
+
+<app-confirm-dialog></app-confirm-dialog>
