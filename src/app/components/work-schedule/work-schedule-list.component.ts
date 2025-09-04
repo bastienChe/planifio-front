@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkScheduleService } from '../../services/work-schedule.service';
+import { EmployeeDto, EmployeeService } from '../../services/employee.service';
+import { Observable } from 'rxjs';
 
 export interface WorkSlot {
   startHour: number;
@@ -48,15 +50,24 @@ export class WorkScheduleComponent implements OnInit {
   hourOptions: number[] = [];
   minuteOptions: number[] = [0, 15, 30, 45];
 
+  employees$!: Observable<EmployeeDto[]>;
+
   schedule: WorkSchedule = this.days.reduce((acc, day) => {
     acc[day] = [];
     return acc;
   }, {} as WorkSchedule);
 
-  constructor(private workScheduleService: WorkScheduleService) {}
+  constructor(private workScheduleService: WorkScheduleService,
+    private employeeService: EmployeeService) {}
   
   ngOnInit() {
+    this.employees$ = this.employeeService.getEmployees();
     this.generateHourOptions();
+  }  
+  
+  onEmployeeChange() {
+    console.log('Employé sélectionné :', this.filterEmployee);
+    // this.workScheduleService.loadSchedule(this.filterEmployee, week, year).subscribe(...)
   }
 
   generateHourOptions() {

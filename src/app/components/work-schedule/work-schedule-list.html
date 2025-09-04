@@ -16,17 +16,20 @@
       <div class="container mt-4">
 
         <!-- Filtres -->
-        <div class="row mb-3 g-2 align-items-end">
-          <div class="col-md-2">
-            <label for="filterEmployee" class="form-label">Employé :</label>
-            <select id="filterEmployee" class="form-select" [(ngModel)]="filterEmployee">
-              <option value="">1</option>
-              <option value="M">2</option>
-              <option value="F">3</option>
-            </select>
-          </div>
+        <div class="col-md-2">
+          <label for="filterEmployee" class="form-label">Employé :</label>
+          <select
+            id="filterEmployee"
+            class="form-select"
+            [(ngModel)]="filterEmployee"
+            (change)="onEmployeeChange()"
+          >
+            <option value="" disabled selected>-- Sélectionner --</option>
+            <option *ngFor="let emp of employees$ | async" [value]="emp.id">
+              {{ emp.name }}
+            </option>
+          </select>
         </div>
-        <div class="row mb-3 g-2 align-items-end">
           <div class="col-md-3 d-flex align-items-end">
             <button class="btn btn-outline-primary me-1" (click)="prevWeek()">&lt;</button>
             <input 
@@ -37,6 +40,7 @@
             />
             <button class="btn btn-outline-primary" (click)="nextWeek()">&gt;</button>
           </div>
+        <div class="row mb-3 g-2 align-items-end">
 
           <div class="container mt-4">
           <h2 class="mb-4 text-center">Work Schedule</h2>
