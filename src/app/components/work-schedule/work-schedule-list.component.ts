@@ -57,6 +57,7 @@ export class WorkScheduleComponent implements OnInit {
   minuteOptions: number[] = [0, 15, 30, 45];
 
   employees$!: Observable<EmployeeDto[]>;
+  workSchedules$!: Observable<WorkSchedule[]>;
 
   schedule: WorkSchedule = this.days.reduce((acc, day) => {
     acc[day] = [];
@@ -72,11 +73,12 @@ export class WorkScheduleComponent implements OnInit {
   }  
   
   onEmployeeChange() {
-    if (this.dirty) {
+    if (this.dirty && this.isScheduleEmpty()) {
       this.confirmDialog.open(
         () => { // si continue
           this.previousEmployee = this.filterEmployee;
           this.resetWorkSlots();
+          this.loadForEmployeeAndWeek();
         },
         () => { // si annule
           this.filterEmployee = this.previousEmployee;
@@ -85,8 +87,25 @@ export class WorkScheduleComponent implements OnInit {
     } else {
       this.previousEmployee = this.filterEmployee;
       this.resetWorkSlots();
+      this.loadForEmployeeAndWeek();
     }
     // this.workScheduleService.loadSchedule(this.filterEmployee, week, year).subscribe(...)
+  }
+
+  loadForEmployeeAndWeek() {
+  console.log('Employe sélectionnée :', this.filterEmployee);
+  const [yearStr, weekStr] = this.filterWeek.split('-W');
+  const yearNumber = Number(yearStr);
+  const weekNumber = Number(weekStr);
+  console.log('Semaine sélectionnée :', weekNumber);
+  console.log('Annee sélectionnée :', yearNumber);
+    if (this.filterEmployee) {
+      this.workScheduleService
+        .loadSchedule(this.filterEmployee, weekNumber, yearNumber)
+        .subscribe(schedule => {
+          this.schedule = schedule;
+        });
+    }
   }
 
   onWeekChange() {
@@ -95,6 +114,7 @@ export class WorkScheduleComponent implements OnInit {
         () => { // si continue
           this.previousWeek = this.filterWeek;
           this.resetWorkSlots();
+      this.loadForEmployeeAndWeek();
         },
         () => { // si annule
           this.filterWeek = this.previousWeek;
@@ -103,7 +123,12 @@ export class WorkScheduleComponent implements OnInit {
     } else {
       this.previousWeek = this.filterWeek;
       this.resetWorkSlots();
+      this.loadForEmployeeAndWeek();
     }
+  }
+
+  isScheduleEmpty(): boolean {
+    return Object.values(this.schedule).every(slots => slots.length === 0);
   }
 
   resetWorkSlots() {  
@@ -111,6 +136,7 @@ export class WorkScheduleComponent implements OnInit {
       acc[day] = [];
       return acc;
     }, {} as WorkSchedule);
+    this.dirty = false; 
   }
 
   generateHourOptions() {

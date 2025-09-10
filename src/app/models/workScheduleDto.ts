@@ -67,3 +67,141 @@ export function mapDtoToSchedule(dtos: WorkScheduleDto[]): WorkSchedule {
 
   return schedule;
 }
+
+// Calcul de la semaine courante
+function getCurrentWeek(): number {
+  const now = new Date();
+  const oneJan = new Date(now.getFullYear(), 0, 1);
+  const numberOfDays = Math.floor((now.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
+  return Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7);
+}
+
+// Générer des données de test
+export const testWorkScheduleDtos: WorkScheduleDto[] = [
+  {
+    id: '1',
+    startTime: '09:00',
+    endTime: '12:00',
+    day: 'Monday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '2',
+    startTime: '13:00',
+    endTime: '17:00',
+    day: 'Monday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '3',
+    startTime: '08:30',
+    endTime: '12:30',
+    day: 'Tuesday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '4',
+    startTime: '14:00',
+    endTime: '18:00',
+    day: 'Wednesday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '5',
+    startTime: '08:00',
+    endTime: '12:00',
+    day: 'Friday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '6',
+    startTime: '14:00',
+    endTime: '15:00',
+    day: 'Friday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '8',
+    startTime: '16:00',
+    endTime: '18:00',
+    day: 'Friday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '9',
+    startTime: '14:00',
+    endTime: '18:00',
+    day: 'Saturday',
+    employeeID: '1',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '11',
+    startTime: '10:00',
+    endTime: '12:00',
+    day: 'Monday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '12',
+    startTime: '13:00',
+    endTime: '15:00',
+    day: 'Monday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '13',
+    startTime: '16:30',
+    endTime: '18:30',
+    day: 'Tuesday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '14',
+    startTime: '09:00',
+    endTime: '12:00',
+    day: 'Wednesday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '15',
+    startTime: '08:00',
+    endTime: '15:00',
+    day: 'Friday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  },
+  {
+    id: '16',
+    startTime: '16:00',
+    endTime: '17:00',
+    day: 'Friday',
+    employeeID: '2',
+    weekNumber: getCurrentWeek(),
+    yearNumber: 2025
+  }
+];
