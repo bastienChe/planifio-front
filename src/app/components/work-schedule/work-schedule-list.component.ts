@@ -3,10 +3,11 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkScheduleService } from '../../services/work-schedule.service';
-import { EmployeeDto, EmployeeService } from '../../services/employee.service';
+import { EmployeeService } from '../../services/employee.service';
 import { Observable } from 'rxjs';
 import { ViewChild } from '@angular/core';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { EmployeeDto } from '../../models/EmployeeDto';
 
 export interface WorkSlot {
   startHour: number;

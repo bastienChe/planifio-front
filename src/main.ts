@@ -24,6 +24,7 @@ bootstrapApplication(App, {
     I18nPluralPipe,
     provideAnimations(),
     provideHttpClient(),
+    
     provideRouter(routes),
     importProvidersFrom(CommonModule) // pour _I18nPluralPipe et autres pipes
   ]

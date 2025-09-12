@@ -24,7 +24,7 @@
               (ngModelChange)="onEmployeeChange($event)"
             >
               <option value="" disabled >Sélectionner un employé</option>
-              <option *ngFor="let e of employees" [value]="e.id">{{ e.name }}</option>
+              <option *ngFor="let e of employees" [value]="e.id">{{ e.firstName }} {{ e.lastName }}</option>
             </select>
           </div>
         </div>

@@ -2,6 +2,10 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
 
+# TODO
+Filtre par company sur les workschedules et les plannings
+Login
+
 ## Development server
 
 To start a local development server, run:
