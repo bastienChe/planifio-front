@@ -12,7 +12,7 @@
             <div class="divider-custom-line"></div>
         </div>
 
-        <!-- About Section Content-->
+        <!-- salon -->
         <div class="row mb-4">
           <div class="col-12 d-flex justify-content-center">
             <div class="w-50">
@@ -37,7 +37,7 @@
     <div class="container">
         <!-- Portfolio Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Practicien</h2>
-        <!-- Icon Divider-->
+        <!-- Practicien-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
@@ -47,13 +47,14 @@
         <div class="row mb-4">
           <div class="col-12 d-flex justify-content-center">
             <div class="w-50">
-                <label for="employeeSelect">Sélectionner un practicien :</label>
-                <select id="employee" class="form-select" [(ngModel)]="selectedPracticien">
-                  <option [ngValue]="null" selected>-- Choisir --</option>
-                  <option>User 1</option>
-                  <option>User 2</option>
-                  <option>User 3</option>
-                </select>
+              <label for="employeeSelect">Sélectionner un praticien :</label>
+              <select id="employeeSelect" class="form-select" [(ngModel)]="selectedEmployee">
+                <option [ngValue]="null" selected>-- Choisir --</option>
+                <option value="all">Tous</option>
+                <option *ngFor="let e of employees" [ngValue]="e.id">
+                  {{ e.firstName }} {{ e.lastName }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -61,7 +62,7 @@
         <div class="d-flex justify-content-between">
           <button class="btn btn-primary btn-xl" (click)="showStep(1)">Précédent</button>
           <button class="btn btn-primary btn-xl" (click)="showStep(3)" 
-            [disabled]="!selectedPracticien">Suivant</button>
+            [disabled]="!selectedEmployee">Suivant</button>
         </div>
     </div>
   </section>

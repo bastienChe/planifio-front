@@ -5,6 +5,8 @@ import { Observable } from "rxjs";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { EmployeeDto } from "../../models/EmployeeDto";
+import { EmployeeService } from "../../services/employee.service";
 
 @Component({
   selector: 'take-appointment',
@@ -26,21 +28,31 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class TakeAppointmentComponent implements OnInit {
   appointments$: Observable<AppointmentDto[]>;
+  employees: EmployeeDto[] = [];   // <-- liste des praticiens
+
 
   selectedAppointmentId?: string;
   currentStep = 1;
   
   selectedSalon: string | null = null;
-  selectedPracticien: string | null = null;
+  selectedEmployee: string | null = null;
   selectedPrestation: string | null = null;
 
-  constructor(private appointmentService: AppointmentService) {
+  constructor(private appointmentService: AppointmentService, private employeeService: EmployeeService) {
     this.appointments$ = this.appointmentService.getAvaibleAppointments$();
     this.generateTimeSlots();
   }
 
   ngOnInit() {
-    this.showStep(1); // Afficher la première étape au chargement
+    this.showStep(1);
+    this.employeeService.getEmployees().subscribe({
+      next: (employees) => {
+        this.employees = employees;
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des employés", err);
+      }
+    });
   }
 
   showStep(step: number) {

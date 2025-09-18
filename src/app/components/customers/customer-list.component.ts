@@ -11,7 +11,7 @@ import { CustomerDto } from '../../models/customerDto';
 @Component({
   selector: 'customer-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FilterCustomersPipe, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.css',
   providers: [CustomerService]
