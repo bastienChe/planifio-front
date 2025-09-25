@@ -114,7 +114,7 @@ ngOnInit() {
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.calendarService.deleteEvent("1",eventToDelete);
+    this.calendarService.deleteEvent(eventToDelete.id as string);
   }
 
   setView(view: CalendarView) {
