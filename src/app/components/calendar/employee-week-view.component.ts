@@ -47,6 +47,8 @@ export class EmployeeWeekViewComponent implements OnInit {
   refresh = new Subject<void>();
   activeDayIsOpen: boolean = true;
   employees: EmployeeDto[] = [];
+  currentYear!: number;
+  currentWeek!: number;
 
   modalData?: {
     action: string;
@@ -57,7 +59,10 @@ export class EmployeeWeekViewComponent implements OnInit {
     private calendarService: CalendarService,
     private employeeService: EmployeeService) { }
   
-ngOnInit() {
+  ngOnInit() {
+    const { year, week } = this.getCurrentWeekAndYear();
+    this.currentYear = year;
+    this.currentWeek = week;
     this.employeeService.getEmployees().subscribe(employees => {
       console.log('EmployeeWeekView: employees loaded', employees);
       this.employees = employees;
@@ -66,7 +71,15 @@ ngOnInit() {
       }
       this.loadEvents();
     });
-}
+  }
+
+  private getCurrentWeekAndYear(): { year: number, week: number } {
+    const now = new Date();
+    const oneJan = new Date(now.getFullYear(), 0, 1);
+    const numberOfDays = Math.floor((now.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
+    const week = Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7);
+    return { year: now.getFullYear(), week };
+  }
 
   onEmployeeChange(employeeId: string) {
     this.employeeId = employeeId;
@@ -74,8 +87,8 @@ ngOnInit() {
   }
 
   private loadEvents() {
-    console.log(`EmployeeWeekView: loading events for employee ${this.employeeId}`);
-    this.events$ = this.calendarService.getEmployeeEvents$(this.employeeId);
+    if (!this.employeeId) return;
+    this.events$ = this.calendarService.getEmployeeEvents$(this.employeeId, this.currentYear, this.currentWeek);
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -98,23 +111,17 @@ ngOnInit() {
   }
 
   addEvent(): void {
-    this.calendarService.addEvent("1",
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: getRandomColor(),
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    );
+    if (!this.employeeId) return;
+    this.calendarService.addEvent(this.employeeId, {
+      title: 'Nouveau RDV',
+      startTime: new Date().toISOString(),
+      endTime: new Date(new Date().getTime() + 30 * 60 * 1000).toISOString() // +30 min
+    }).subscribe(() => this.loadEvents());
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.calendarService.deleteEvent(eventToDelete.id as string);
+  deleteEvent(event: CalendarEvent) {
+    this.calendarService.deleteEvent(event.id as string)
+      .subscribe(() => this.loadEvents());
   }
 
   setView(view: CalendarView) {
@@ -124,43 +131,30 @@ ngOnInit() {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  
-  /*
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];*/
-  
-/*
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }*/
+
+  changeWeek(delta: number) {
+    let week = this.currentWeek + delta;
+    let year = this.currentYear;
+
+    if (week < 1) {
+      year -= 1;
+      week = this.getWeeksInYear(year);
+    } else if (week > this.getWeeksInYear(year)) {
+      week = 1;
+      year += 1;
+    }
+
+    this.currentWeek = week;
+    this.currentYear = year;
+
+    this.loadEvents(); // recharge les events pour la nouvelle semaine
+  }
+
+  private getWeeksInYear(year: number): number {
+    const d = new Date(year, 11, 31);
+    const oneJan = new Date(year, 0, 1);
+    const numberOfDays = Math.floor((d.getTime() - oneJan.getTime()) / (24*60*60*1000));
+    return Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7);
+  }
 
 }

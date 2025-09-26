@@ -1,81 +1,69 @@
 // calendar.service.ts
 import { Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, map } from 'rxjs';
 import { getRandomColor } from '../shared/event-color';
-import { v4 as uuidv4 } from 'uuid'; // besoin de npm install uuid
-
-export interface EmployeeCalendarEvent extends CalendarEvent {
-  id: string;        // identifiant unique de l'event
-  employeeId: string; // à quel employé est rattaché l'event
-}
+import { HttpClient } from '@angular/common/http';
+import { EmployeeCalendarEvent } from '../models/employee-calendar-event';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarService {  
+  private baseUrl = 'http://localhost:8081/planifio';
 
-  private _events$ = new BehaviorSubject<EmployeeCalendarEvent[]>([]);
-
-  constructor() {
-    // Données mockées
-    const initial: EmployeeCalendarEvent[] = [
-      {
-        id: uuidv4(),
-        employeeId: '1',
-        start: new Date(new Date().setHours(15, 30, 0, 0)),
-        end: new Date(new Date().setHours(16, 30, 0, 0)),
-        title: 'RDV D',
-        color: getRandomColor(),
-      },
-      {
-        id: uuidv4(),
-        employeeId: '2',
-        start: new Date(new Date().setHours(10, 30, 0, 0)),
-        end: new Date(new Date().setHours(11, 0, 0, 0)),
-        title: 'RDV XX',
-        color: getRandomColor(),
-      },
-      {
-        id: uuidv4(),
-        employeeId: '3',
-        start: new Date(new Date().setHours(8, 30, 0, 0)),
-        end: new Date(new Date().setHours(9, 0, 0, 0)),
-        title: 'RDV Tom',
-        color: getRandomColor(),
-      }
-    ];
-
-    this._events$.next(initial);
+  constructor(private http: HttpClient) {
   }
 
-  /** Tous les events (debug, admin, etc.) */
-  getAllEvents$(): Observable<EmployeeCalendarEvent[]> {
-    return this._events$.asObservable();
+  getEmployeeEvents$(employeeId: string, yearNumber: number, weekNumber: number): Observable<CalendarEvent[]> {
+    return this.http.get<EmployeeCalendarEvent[]>(`${this.baseUrl}/employee/${employeeId}/planning/year/${yearNumber}/week/${weekNumber}`)
+      .pipe(
+        map(events =>
+          events.map(e => ({
+            id: e.id,
+            title: e.title,
+            start: new Date(e.startTime),
+            end: new Date(e.endTime),
+            color: getRandomColor(),
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            }
+          }))
+        )
+      );
   }
 
-  /** Events d’un employé */
-  getEmployeeEvents$(employeeId: string): Observable<EmployeeCalendarEvent[]> {
-    return new Observable<EmployeeCalendarEvent[]>(observer => {
-      this._events$.subscribe(events => {
-        observer.next(events.filter(e => e.employeeId === employeeId));
-      });
-    });
+  addEvent(employeeId: string, event: Partial<EmployeeCalendarEvent>): Observable<CalendarEvent> {
+    return this.http.post<EmployeeCalendarEvent>(`${this.baseUrl}/planning/${employeeId}`, event)
+      .pipe(
+        map(e => ({
+          id: e.id,
+          title: e.title,
+          start: new Date(e.startTime),
+          end: new Date(e.endTime),
+          color: getRandomColor(),
+          draggable: true,
+          resizable: { beforeStart: true, afterEnd: true }
+        }))
+      );
   }
 
-  /** Ajout */
-  addEvent(employeeId: string, event: Omit<EmployeeCalendarEvent, 'id' | 'employeeId'>) {
-    const newEvent: EmployeeCalendarEvent = { ...event, id: uuidv4(), employeeId };
-    this._events$.next([...this._events$.value, newEvent]);
+  deleteEvent(eventId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/planning/${eventId}`);
   }
 
-  /** Mise à jour */
-  updateEvent(updated: EmployeeCalendarEvent) {
-    this._events$.next(
-      this._events$.value.map(e => e.id === updated.id ? { ...updated } : e)
-    );
-  }
-
-  /** Suppression */
-  deleteEvent(eventId: string) {
-    this._events$.next(this._events$.value.filter(e => e.id !== eventId));
+  updateEvent(eventId: string, updated: Partial<EmployeeCalendarEvent>): Observable<CalendarEvent> {
+    return this.http.put<EmployeeCalendarEvent>(`${this.baseUrl}/planning/${eventId}`, updated)
+      .pipe(
+        map(e => ({
+          id: e.id,
+          title: e.title,
+          start: new Date(e.startTime),
+          end: new Date(e.endTime),
+          color: getRandomColor(),
+          draggable: true,
+          resizable: { beforeStart: true, afterEnd: true }
+        }))
+      );
   }
 }
